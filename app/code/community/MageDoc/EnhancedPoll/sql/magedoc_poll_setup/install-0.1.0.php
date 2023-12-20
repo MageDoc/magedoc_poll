@@ -86,4 +86,10 @@ $installer->getConnection()->addIndex(
     'type'
 );
 
+$installer->getConnection()->addIndex(
+    $installer->getTable($tableName),
+    $installer->getIdxName($tableName, array('poll_id', 'customer_id')),
+    array('poll_id', 'customer_id')
+);
+
 $installer->endSetup();

@@ -64,13 +64,17 @@ MageDocPolls.prototype = {
             ? poll.poll_input_type
             : 'text';
         var customer = row.select('td:nth-child(' + (poll.customer_id_column - shift) + ')')[0];
+        if (customer.down('a')){
+            customer = customer.down('a');
+        }
         var url = '/xamin/enhancedPoll_vote/add/poll_id/' + pollId + '/customer_id/' + customer.innerHTML
         if (inputType == 'text') {
-            var input = new Element('input',
+            /*var input = new Element('input',
                 {
                     'type': 'text',
                     'value': value.innerHTML
-                });
+                });*/
+            var input = new Element('textarea').update(value.innerHTML);
         } else if (inputType == 'range') {
             var input = new Element('select');
             var range = poll.poll_input_range.split('-');

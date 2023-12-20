@@ -19,4 +19,20 @@ class MageDoc_EnhancedPoll_Model_Observer
             }
         }
     }
+
+    public function magedoc_adminhtml_customer_edit_tabs($observer)
+    {
+        $tabs = $observer->getTabs();
+        if (Mage::registry('current_customer')->getId()) {
+            $tabs->addTabAfter('votes', array(
+                'label'     => Mage::helper('magedoc')->__('Votes'),
+                'class'     => 'ajax',
+                'url'       => $tabs->getUrl(
+                    'adminhtml/enhancedPoll_vote/votesGrid',
+                    array(
+                        'id'     => Mage::registry('current_customer')->getId())
+                ),
+            ), 'addresses');
+        }
+    }
 }

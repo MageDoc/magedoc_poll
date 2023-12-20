@@ -35,6 +35,16 @@ class MageDoc_EnhancedPoll_Adminhtml_EnhancedPoll_VoteController extends Mage_Ad
 {
     protected $_publicActions = array('add');
 
+    protected function _initCustomer($idFieldName = 'id')
+    {
+        $customerId = (int) $this->getRequest()->getParam($idFieldName);
+        $customer = Mage::getModel('customer/customer')
+            ->load($customerId);
+
+        Mage::register('current_customer', $customer);
+        return $this;
+    }
+
     /**
      * Add Vote to Poll
      *
@@ -103,8 +113,21 @@ class MageDoc_EnhancedPoll_Adminhtml_EnhancedPoll_VoteController extends Mage_Ad
         }
     }
 
+    public function votesGridAction()
+    {
+        $this->_initCustomer();
+        $this->getResponse()->setBody(
+            $this->getLayout()
+                ->createBlock('magedoc_poll/adminhtml_customer_edit_tab_votes')
+                ->toHtml());
+        return $this;
+    }
+
     protected function _validateFormKey()
     {
-        return true;
+        if ($this->getFullActionName() == 'adminhtml_enhancedPoll_vote_add') {
+            return true;
+        }
+        return parent::_validateFormKey();
     }
 }

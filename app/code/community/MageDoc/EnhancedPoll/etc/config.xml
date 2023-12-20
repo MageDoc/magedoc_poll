@@ -49,12 +49,21 @@
         <events>
             <core_abstract_save_before>
                 <observers>
-                    <bookkeeping>
+                    <magedoc_poll>
                         <class>magedoc_poll/observer</class>
                         <method>core_abstract_save_before</method>
-                    </bookkeeping>
+                    </magedoc_poll>
                 </observers>
             </core_abstract_save_before>
+            <magedoc_adminhtml_customer_edit_tabs>
+                <observers>
+                    <magedoc_poll>
+                        <type>singleton</type>
+                        <class>magedoc_poll/observer</class>
+                        <method>magedoc_adminhtml_customer_edit_tabs</method>
+                    </magedoc_poll>
+                </observers>
+            </magedoc_adminhtml_customer_edit_tabs>
         </events>
     </adminhtml>
     <admin>
